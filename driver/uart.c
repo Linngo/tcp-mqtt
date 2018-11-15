@@ -323,11 +323,10 @@ bool ICACHE_FLASH_ATTR Data_analyze(char *pdata, unsigned short len){
 
 	if(len == os_strlen("#Smartconfig#")&&os_strstr(pdata,"#Smartconfig#"))
 	{
+		Smart_flag=1;
 		os_printf("Smartconfig\r\n");
-
 		uart0_sendStr("Smartconfig\r\n");
 
-		Smart_flag=1;
 		wifi_station_disconnect();
 		smartconfig_stop();
 		smart_config();
