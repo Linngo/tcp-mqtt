@@ -5,7 +5,7 @@
 
 #define IOT_VERSION_MAJOR		1U
 #define IOT_VERSION_MINOR		1U
-#define IOT_VERSION_REVISION	3U
+#define IOT_VERSION_REVISION	4U
 
 
 #define EN_boot_wificonfig 0
