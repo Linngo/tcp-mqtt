@@ -45,6 +45,7 @@
 #include "smartconfig.h"
 
 #include "OTAupgrade.h"
+//#include <iconv.h>
 
 //MQTT_Client mqttClient;
 static ETSTimer sntp_timer;
@@ -370,6 +371,24 @@ void ICACHE_FLASH_ATTR print_info()
 
 	INFO("\r\n[INFO] BOOT ADDRESS:%X\r\n",system_get_userbin_addr());
 }
+/**********************************************************************************
+ * ²âÊÔ×ªÂë
+ * *******************************************************************************/
+/*int u2g(char *inbuf, size_t inlen,char *outbuf, size_t outlen) {
+    iconv_t cd;
+    char **pin = &inbuf;
+    char **pout = &outbuf;
+
+    cd = iconv_open("GB2312","UTF-8");
+    if (cd==0)
+            return -1;
+    memset(outbuf,0,outlen);
+    if (iconv(cd,(const char**)pin,&inlen,pout,&outlen) == -1)
+            return -1;
+    iconv_close(cd);
+
+    return 0;
+}*/
 
 void wifi_handle_event_cb(System_Event_t *evt)
 {
@@ -381,6 +400,8 @@ void wifi_handle_event_cb(System_Event_t *evt)
 			wifi_check_ip(NULL);
 			enlarge;
 			uint8 *buf = (uint8*)os_zalloc(evt->event_info.connected.ssid_len+23);
+//			u2g(evt->event_info.connected.ssid,evt->event_info.connected.ssid_len,buf,evt->event_info.connected.ssid_len);
+//			INFO("%s\r\n",buf);
 			os_sprintf(buf,"connect to %s\r\n",evt->event_info.connected.ssid);
 			uart0_sendStr(buf);
 			os_free(buf);

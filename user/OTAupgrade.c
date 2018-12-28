@@ -450,6 +450,11 @@ bool ICACHE_FLASH_ATTR wifi_set(void *arg, char *pdata) {
 			if (ssid_json && psw_json) {
 				if (ssid_json->type==cJSON_String && psw_json->type==cJSON_String)
 					WIFI_Connect(ssid_json->valuestring, psw_json->valuestring);
+			   if(Server_Mode == AP_MODE){
+					Server_Mode=TCP_SERVER;
+					spi_flash_erase_sector(0x79 + 2);
+					spi_flash_write((0x79 + 2) * 4096,(uint32 *)&Server_Mode, sizeof(Server_Mode));
+				}
 			}
 		}
 		ret = 1;
