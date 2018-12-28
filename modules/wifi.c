@@ -29,6 +29,10 @@ static uint8_t wifiStatus = STATION_IDLE, lastWifiStatus = STATION_IDLE;
 
 struct espconn user_tcp_espconn;
 struct espconn user_tcp_9100;
+//uint8 tcp1[sizeof(esp_tcp)];
+//uint8 tcp2[sizeof(esp_tcp)];
+esp_tcp tcp1;
+esp_tcp tcp2;
 
 #if multi_client_EN
 //static remot_info *Premot = NULL;
@@ -229,7 +233,7 @@ void ICACHE_FLASH_ATTR TCP_recv(void *arg, char *pdata, unsigned short len) {
 }
 void ICACHE_FLASH_ATTR server_sent(void *arg) {
 
-		//INFO("send succeed\r\n");
+	//uart0_sendStr("send succeed\r\n");
 		isConnected = true;
 }
 static bool tcp_link = 2;
@@ -357,7 +361,7 @@ void ICACHE_FLASH_ATTR Inter213_InitTCP(uint32_t Local_port)
 {
 	if(Local_port == 8266)
 	{
-		user_tcp_espconn.proto.tcp = (esp_tcp *) os_zalloc(sizeof(esp_tcp)); //分配空间
+		user_tcp_espconn.proto.tcp = &tcp1;//(esp_tcp *) os_zalloc(sizeof(esp_tcp)); //分配空间
 		user_tcp_espconn.type = ESPCONN_TCP; //设置类型为TCP协议
 		user_tcp_espconn.proto.tcp->local_port = Local_port; //本地端口
 		user_tcp_espconn.state = ESPCONN_NONE;
@@ -370,7 +374,7 @@ void ICACHE_FLASH_ATTR Inter213_InitTCP(uint32_t Local_port)
 		espconn_tcp_set_max_con_allow(&user_tcp_espconn,1);
 	}else
 	{
-		user_tcp_9100.proto.tcp = (esp_tcp *) os_zalloc(sizeof(esp_tcp)); //分配空间
+		user_tcp_9100.proto.tcp = &tcp2;// (esp_tcp *)os_zalloc(sizeof(esp_tcp)); //分配空间
 		user_tcp_9100.type = ESPCONN_TCP; //设置类型为TCP协议
 		user_tcp_9100.proto.tcp->local_port = Local_port; //本地端口
 		user_tcp_9100.state = ESPCONN_NONE;
