@@ -52,7 +52,7 @@ COMPONENTS_eagle.app.v6 = \
 	user/libuser.a  \
 	mqtt/libmqtt.a  \
 	modules/libmodules.a \
-	driver/libdriver.a
+	driver/libdriver.a 
 
 LINKFLAGS_eagle.app.v6 = \
 	-L../lib        \
